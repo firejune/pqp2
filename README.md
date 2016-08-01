@@ -1,8 +1,11 @@
 # PHP Quick Profiler 2
-I create "PHP Quick Profiler 2" for modern PHP programming extending [original PQP](http://particletree.com/features/php-quick-profiler/)
+I create "PHP Quick Profiler 2" for modern PHP programming. It just extending [original PQP](http://particletree.com/features/php-quick-profiler/). Check out this [DEMO](https://firejune.com/addon/lib/pqp2/example.php)
 
 ## Changes between PQP#1:
 - Support Mobile Browser and Single Page Application.
+- Reduce the Global Namespace of inline JavaScript.
+- Design Refresh for more Compact.
+- Remember the UI State(eg: Selected tab, Minimized...).
 - Soft Error Handling with 'Strict Mode'.
 - Display Stack Trace when Occurred Exception.
 - Record Microtime, Backtrace and Memory Usage each Every Logs.

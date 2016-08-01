@@ -15,16 +15,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-require_once('classes/PhpQuickProfiler.php');
-//require_once('classes/MySqlDatabase.php');
+require_once('index.php');
 
-class PQPExample {
+class PQP2Example {
 
 	private $profiler;
 	private $db = '';
 
 	public function __construct() {
-		$this->profiler = new PhpQuickProfiler(PhpQuickProfiler::getMicroTime(), '/addon/lib/pqp/');
+		$this->profiler = new PhpQuickProfiler(dirname(__FILE__));
 	}
 
 	public function init() {
@@ -34,32 +33,27 @@ class PQPExample {
 		$this->sampleSpeedComparison();
 	}
 
-	/*-------------------------------------------
-	     EXAMPLES OF THE 4 CONSOLE FUNCTIONS
-	-------------------------------------------*/
-
+	// EXAMPLES OF THE 4 CONSOLE FUNCTIONS
 	public function sampleConsoleData() {
 		try {
-			Console::log('Begin logging data');
-			Console::logMemory($this, 'PQP Example Class : Line '.__LINE__);
-			Console::logSpeed('Time taken to get to line '.__LINE__);
-			Console::log(array('Name' => 'Ryan', 'Last' => 'Campbell'));
-			Console::logSpeed('Time taken to get to line '.__LINE__);
-			Console::logMemory($this, 'PQP Example Class : Line '.__LINE__);
-			Console::log('Ending log below with a sample error.');
+			console::log('Begin logging data');
+			console::memory($this, 'PQP Example Class : Line '.__LINE__);
+			console::speed('Time taken to get to line '.__LINE__);
+			console::log(array('Name' => 'Ryan', 'Last' => 'Campbell'));
+			console::speed('Time taken to get to line '.__LINE__);
+			console::memory($this, 'PQP Example Class : Line '.__LINE__);
+			console::log('Ending log below with a sample error.');
 			throw new Exception('Unable to write to log!');
 		}
 		catch(Exception $e) {
-			Console::logError($e, 'Sample error logging.');
+			console::error($e, 'Sample error logging.');
 		}
 	}
 
-	/*-------------------------------------
-	     DATABASE OBJECT TO LOG QUERIES
-	--------------------------------------*/
-
+	// DATABASE OBJECT TO LOG QUERIES
 	public function sampleDatabaseData() {
-		/*$this->db = new MySqlDatabase(
+		/*
+		$this->db = new MySqlDatabase(
 			'your DB host',
 			'your DB user',
 			'your DB password');
@@ -73,34 +67,29 @@ class PQPExample {
 		$rs = $this->db->query($sql);
 
 		$sql = 'SELECT COUNT(PostId) FROM Posts WHERE PostId != 1';
-		$rs = $this->db->query($sql);*/
+		$rs = $this->db->query($sql);
+		*/
 	}
 
-	/*-----------------------------------
-	     EXAMPLE MEMORY LEAK DETECTED
-	------------------------------------*/
-
+	// EXAMPLE MEMORY LEAK DETECTED
 	public function sampleMemoryLeak() {
 		$ret = '';
 		$longString = 'This is a really long string that when appended with the . symbol
-					  will cause memory to be duplicated in order to create the new string.';
-		for($i = 0; $i < 10; $i++) {
+						will cause memory to be duplicated in order to create the new string.';
+		for ($i = 0; $i < 10; $i++) {
 			$ret = $ret . $longString;
-			Console::logMemory($ret, 'Watch memory leak -- iteration '.$i);
+			console::memory($ret, 'Watch memory leak -- iteration '.$i);
 		}
 	}
 
-	/*-----------------------------------
-	     POINT IN TIME SPEED MARKS
-	------------------------------------*/
-
+	// POINT IN TIME SPEED MARKS
 	public function sampleSpeedComparison() {
-		Console::logSpeed('Time taken to get to line '.__LINE__);
-		Console::logSpeed('Time taken to get to line '.__LINE__);
-		Console::logSpeed('Time taken to get to line '.__LINE__);
-		Console::logSpeed('Time taken to get to line '.__LINE__);
-		Console::logSpeed('Time taken to get to line '.__LINE__);
-		Console::logSpeed('Time taken to get to line '.__LINE__);
+		console::speed('Time taken to get to line '.__LINE__);
+		console::speed('Time taken to get to line '.__LINE__);
+		console::speed('Time taken to get to line '.__LINE__);
+		console::speed('Time taken to get to line '.__LINE__);
+		console::speed('Time taken to get to line '.__LINE__);
+		console::speed('Time taken to get to line '.__LINE__);
 	}
 
 	public function __destruct() {
@@ -109,33 +98,27 @@ class PQPExample {
 
 }
 
-$pqp = new PQPExample();
+$pqp = new PQP2Example();
 $pqp->init();
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-
-<title>
-PHP Quick Profiler Demo
-</title>
-
-
-<!-- CSS -->
-
+<title>PHP Quick Profiler #2 Demo</title>
 <style type="text/css">
 body{
 	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
 	margin:100px 0 0 0;
 	background:#eee;
 }
-h3{
+a {
+	color: #7EA411;
+}
+h3 {
 	line-height:160%;
 }
-#box{
+#box {
 	margin:100px auto 0 auto;
 	width: 450px;
 	padding:10px 20px 30px 20px;
@@ -150,29 +133,26 @@ h3{
 	margin:0 0 0 20px;
 	padding:0 0 10px 0;
 }
-li a{
+li a {
 	color:blue;
 }
-strong a{
+strong a {
 	color:#7EA411;
 }
 </style>
 
 <body>
-
 <div id="box">
-	<h3>On this Page You Can See How to <br /> Use the PHP Quick Profiler to...</h3>
-
+	<h3>On this Page You Can See How to <br /> Use the PHP Quick Profiler #2 to...</h3>
 	<ul>
-	<li>Log PHP Objects. [ <a href="#" onclick="changeTab('console'); return false;">Demo</a> ]</li>
-	<li>Watch as a string eats up memory. [ <a href="#" onclick="changeTab('memory'); return false;">Demo</a> ]</li>
-	<li>Monitor our queries and their indexes. [ <a href="#" onclick="changeTab('queries'); return false;">Demo</a> ]</li>
-	<li>Ensure page execution time is acceptable. [ <a href="#" onclick="changeTab('speed'); return false;">Demo</a> ]</li>
-	<li>Prevent files from getting out of control. [ <a href="#" onclick="changeTab('files'); return false;">Demo</a> ]</li>
+	<li>Log PHP Objects. [ <a href="#" onclick="pQp.changeTab('console'); return false;">Demo</a> ]</li>
+	<li>Watch as a string eats up memory. [ <a href="#" onclick="pQp.changeTab('memory'); return false;">Demo</a> ]</li>
+	<li>Monitor our queries and their indexes. [ <a href="#" onclick="pQp.changeTab('queries'); return false;">Demo</a> ]</li>
+	<li>Ensure page execution time is acceptable. [ <a href="#" onclick="pQp.changeTab('speed'); return false;">Demo</a> ]</li>
+	<li>Prevent files from getting out of control. [ <a href="#" onclick="pQp.changeTab('files'); return false;">Demo</a> ]</li>
 	</ul>
 
 	<strong>Return to <a href="http://particletree.com/features/php-quick-profiler/">Particletree</a>.</strong>
 </div>
-
 </body>
 </html>
