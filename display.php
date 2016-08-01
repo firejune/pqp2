@@ -75,7 +75,7 @@ else {
 
 		$class = '';
 		foreach($output['logs']['console'] as $key => $log) {
-			if (isset($log['query'])) {
+			if (!empty($log['query'])) {
 				$log['type'] = 'query';
 			}
 			echo '<tr class="log-'.$log['type'].'">
@@ -417,6 +417,10 @@ typeof window.pQp != 'function' ? window.pQp = (function() {
 			obj = document.getElementById(obj);
 		}
 
+		if (!obj) {
+			return;
+		}
+
 		if (obj.attachEvent) {
 			obj['e' + type + fn] = fn;
 			obj[type+fn] = function() {
@@ -428,6 +432,7 @@ typeof window.pQp != 'function' ? window.pQp = (function() {
 		}
 	}
 
+	main.changeTab = changeTab;
 	return main;
 })() : pQp();
 </script>
