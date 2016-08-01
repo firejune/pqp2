@@ -1,0 +1,476 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+
+ Title : PHP Quick Profiler CSS
+ Author : Designed by Kevin Hale.
+ URL : http://particletree.com/features/php-quick-profiler/
+
+ Last Updated : April 21, 2009
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+.pQp{
+	width:100%;
+	text-align:center;
+	position:fixed;
+	bottom:0;
+	left: 0;
+	z-index: 1000;
+}
+.pQp table{
+	border-collapse: separate;
+	border-spacing: 0;
+}
+.pQp *{
+	margin:0;
+	padding:0;
+	border:none;
+}
+#pQp{
+	margin:0 auto;
+	width:96%;
+	background-color:#000;
+	border:12px solid #000;
+	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
+	border-radius: 15px 15px 0 0;
+	position: relative;
+}
+#pQp .pqp-box h3{
+	font-weight:normal;
+	line-height:200px;
+	padding:0 15px;
+	color:#fff;
+}
+.pQp, .pQp td{
+	color:#444;
+}
+
+/* ----- IDS ----- */
+
+#pqp-metrics{
+	background:#000;
+	width:100%;
+}
+#pqp-console, #pqp-speed, #pqp-queries, #pqp-memory, #pqp-files{
+	height:200px;
+	width: 100%;
+
+	background: repeating-linear-gradient(
+		-45deg,
+		#222,
+		#222 3px,
+		#333 3px,
+		#333 6px
+	);
+
+	background: repeating-linear-gradient(
+		-45deg,
+		rgba(255, 255, 255, .2),
+		rgba(255, 255, 255, .2) 3px,
+		rgba(0, 0, 0, .2) 3px,
+		rgba(0, 0, 0, .2) 6px
+	);
+}
+
+/* ----- Colors ----- */
+
+.pQp .green{color:#588E13 !important;}
+.pQp .blue{color:#3769A0 !important;}
+.pQp .purple{color:#953FA1 !important;}
+.pQp .orange{color:#D28C00 !important;}
+.pQp .red{color:#B72F09 !important;}
+
+/* ----- Logic ----- */
+
+#pQp, #pqp-console, #pqp-speed, #pqp-queries, #pqp-memory, #pqp-files{
+	display:none;
+}
+.pQp .console, .pQp .speed, .pQp .queries, .pQp .memory, .pQp .files{
+	display:block !important;
+}
+.pQp .console #pqp-console, .pQp .speed #pqp-speed, .pQp .queries #pqp-queries,
+.pQp .memory #pqp-memory, .pQp .files #pqp-files{
+	display:block;
+	border-bottom:1px solid #333;
+}
+.console td.green, .speed td.blue, .queries td.purple, .memory td.orange, .files td.red{
+	background:#222 !important;
+	border-bottom:2px solid #fff !important;
+	cursor:default !important;
+}
+
+.tallDetails #pQp .pqp-box{
+	height:470px;
+	max-height: calc(100% - 300px);
+}
+.tallDetails #pQp .pqp-box h3{
+	line-height:470px;
+}
+.tallDetails #pqp-header .actions .res {
+	display: inline-block;
+}
+.tallDetails #pqp-header .actions .max {
+	display: none;
+}
+
+.hideDetails #pQp {
+	border-top-width: 12px;
+	border-bottom: 0;
+}
+.hideDetails #pQp .pqp-box{
+	display:none !important;
+}
+.hideDetails #pQp #pqp-metrics td{
+	height:50px;
+	background:#000 !important;
+	border-bottom:none !important;
+	cursor:default !important;
+}
+.hideDetails #pQp var{
+	font-size:18px;
+	margin:0 0 2px 0;
+}
+.hideDetails #pQp h4{
+	font-size:10px;
+}
+.hideDetails #pqp-header{
+	display: none;
+}
+
+/* ----- Metrics ----- */
+
+#pqp-metrics td{
+	height:70px;
+	width:20%;
+	text-align:center;
+	cursor:pointer;
+	border:1px solid #000;
+	border-bottom:2px solid #444;
+	border-radius:10px 10px 0 0;
+	vertical-align: middle;
+}
+#pqp-metrics td:hover{
+	background:#222;
+	border-bottom:2px solid #777;
+}
+#pqp-metrics .green{
+	border-left:none;
+}
+#pqp-metrics .red{
+	border-right:none;
+}
+
+#pqp-metrics h4{
+	text-shadow:#000 1px 1px 1px;
+}
+.side var{
+	text-shadow:#444 1px 1px 1px;
+}
+
+.pQp var{
+	font-size:23px;
+	font-weight:bold;
+	font-style:normal;
+	margin:0 0 3px 0;
+	display:block;
+}
+.pQp h4{
+	font-size:12px;
+	color:#fff;
+	margin:0 0 4px 0;
+}
+
+/* ----- Main ----- */
+
+.pQp .main{
+	height: 100%;
+	overflow:auto;
+	background:#111;
+	border-left: 1px solid #333;
+	border-right: 1px solid #333;
+	-webkit-overflow-scrolling: touch;
+}
+.pQp .main table{
+	width: 100%;
+}
+.pQp .main td{
+	padding:7px;
+	text-align:left;
+	background:#151515;
+	border-bottom:1px dashed #323232;
+	color:#FFF;
+}
+.pQp .main tr:last-child td {
+	border-bottom: 1px solid #333;
+}
+.pQp .main td,
+.pQp .main pre{
+	font-family:Monaco, "Consolas", "Lucida Console", "Courier New", monospace;
+	font-size:11px;
+}
+.pQp .main pre{
+	background: transparent !important;
+	padding: 0 !important;
+}
+.pQp .main td.alt{
+	background:#111;
+}
+.pQp .main tr.alt td{
+	background:#2E2E2E;
+	border-top:1px dotted #4E4E4E;
+}
+.pQp .main tr.alt td.alt{
+	background:#333;
+}
+.pQp .main td b{
+  color:#E6F387;
+	font-weight:normal;
+}
+.pQp .main td:hover{
+	background:#2E2E2E;
+}
+
+/* ----- Side ----- */
+
+.pQp .side{
+	float:left;
+	width:20%;
+	color:#fff;
+	text-align:center;
+}
+.pQp .side tr:last-child td:first-child {
+	border-radius: 0 0 0 30px;
+}
+
+.pQp .side td{
+	padding:10px 0 5px 0;
+	box-shadow: inset -10px 0 10px -5px rgba(0, 0, 0, .25);
+}
+.pQp .side var{
+	color:#fff;
+	font-size:15px;
+}
+.pQp .side h4{
+	font-weight:normal;
+	color:#F4FCCA;
+	font-size:11px;
+}
+
+/* ----- Console ----- */
+
+#pqp-console .side td{
+	padding:12px 0;
+}
+#pqp-console .side td.alt1{
+	background:#588E13;
+	width:51%;
+}
+#pqp-console .side td.alt2{
+	background-color:#B72F09;
+}
+#pqp-console .side td.alt3{
+	background:#D28C00;
+	border-bottom:1px solid #9C6800;
+	border-left:1px solid #9C6800;
+	border-radius: 0 0 0 30px;
+}
+#pqp-console .side td.alt4{
+	background-color:#3769A0;
+	border-bottom:1px solid #274B74;
+}
+
+#pqp-console .main table{
+	width:100%;
+}
+#pqp-console td div{
+	width:100%;
+	overflow:hidden;
+}
+#pqp-console td.type{
+	font-family:"Lucida Grande", Tahoma, Arial, sans-serif;
+	text-align:center;
+	text-transform: uppercase;
+	font-size:9px;
+	padding-top:9px;
+	color:#F4FCCA;
+	vertical-align:top;
+	width:40px;
+}
+.pQp .log-log td.type{
+	background:#47740D !important;
+}
+.pQp .log-error td.type{
+	background:#9B2700 !important;
+}
+.pQp .log-memory td.type{
+	background:#D28C00 !important;
+}
+.pQp .log-speed td.type{
+	background:#2B5481 !important;
+}
+.pQp .log-query td.type{
+	background:#71277c !important;
+}
+.pQp .log-query .duplicate {
+	background:#9B2700 !important;
+}
+
+.pQp .log-query span{
+	color:#FFFD70;
+}
+.pQp .log-log pre{
+	color:#999;
+}
+.pQp .log-log td:hover pre{
+	color:#fff;
+}
+.pQp .pqp-box .main em{
+	font-style:normal;
+}
+.pQp .log-memory em {
+	color:#E6F387;
+}
+.pQp .log-error em {
+	color:#E6F387;
+}
+.pQp .log-query pre,
+.pQp .log-log pre {
+  color:#376aa1;
+}
+.pQp .pqp-box .main pre {
+	float:right;
+	white-space: normal;
+	display:block;
+}
+
+.pQp .log-error pre { color: #B72F09; }
+.pQp .log-memory pre { color:#D28C00; }
+.pQp .pqp-box .main .query { color: #953FA1; }
+
+.pQp .pqp-box .main .memory pre,
+.pQp .pqp-box .main .query pre { color: #999; }
+
+
+.pQp .pqp-box .main .context {
+	color: #aaa;
+}
+.pQp .pqp-box .main .context b {
+	color: #E6F387;
+}
+.pQp .pqp-box .main .context span {
+	color: #fff;
+}
+
+/* ----- Speed ----- */
+
+#pqp-speed .side td{
+	padding:12px 0;
+	background-color:#3769A0;
+}
+#pqp-speed .side td.alt{
+	background-color:#2B5481;
+	border-bottom:1px solid #1E3C5C;
+	border-left:1px solid #1E3C5C;
+	-webkit-border-bottom-left-radius:30px;
+	-moz-border-radius-bottomleft:30px;
+}
+
+/* ----- Queries ----- */
+
+#pqp-queries .side td{
+	background-color:#953FA1;
+	border-bottom:1px solid #662A6E;
+	border-left:1px solid #662A6E;
+}
+#pqp-queries .side td.alt{
+	background-color:#7B3384;
+}
+#pqp-queries .main em{
+	display:block;
+	padding:2px 0 0 0;
+	font-style:normal;
+	color:#aaa;
+}
+
+/* ----- Memory ----- */
+
+#pqp-memory .side td{
+	padding:12px 0;
+	background-color:#C48200;
+}
+#pqp-memory .side td.alt{
+	background-color:#AC7200;
+	border-bottom:1px solid #865900;
+	border-left:1px solid #865900;
+	-webkit-border-bottom-left-radius:30px;
+	-moz-border-radius-bottomleft:30px;
+}
+
+/* ----- Files ----- */
+
+#pqp-files .side td{
+	background-color:#B72F09;
+	border-bottom:1px solid #7C1F00;
+	border-left:1px solid #7C1F00;
+}
+#pqp-files .side td.alt{
+	background-color:#9B2700;
+}
+#pqp-files .main pre{
+  color:#E6F387;
+}
+
+/* ----- Footer ----- */
+
+#pqp-header{
+	font-size: 10px;
+	position: absolute;
+	top: -11px;
+	left: -11px;
+	right: -11px;
+	height: 12px;
+}
+#pqp-header strong{
+	color:#fff;
+}
+#pqp-header a{
+	background: #000;
+	text-decoration:none;
+	border-bottom: 1px solid #333;
+}
+#pqp-header .credit{
+	float: left;
+	text-align:left;
+	font-size: 11px;
+	line-height: 20px;
+	letter-spacing: 0;
+}
+#pqp-header .credit a {
+	padding:4px 12px;
+	border-right: 1px solid #333;
+	border-radius: 15px 0 15px 0;
+}
+#pqp-header .actions{
+	float: right;
+	text-align:right;
+}
+#pqp-header .actions a{
+	float:right;
+	padding:2px 8px 4px;
+	border-left: 1px solid #333;
+}
+#pqp-header .actions a:first-child {
+	border-radius: 0 15px 0 0;
+}
+#pqp-header .actions a:last-child {
+	border-radius: 0 0 0 15px;
+}
+#pqp-header .actions .res {
+	display: none;
+}
+#pqp-header a:hover {
+	background:#888;
+}
+#pqp-header a:active, #pqp-header a:active strong, #pqp-header a:active b{
+	background:#ECF488;
+	color:green !important;
+}
