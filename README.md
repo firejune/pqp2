@@ -1,5 +1,14 @@
 # PHP Quick Profiler 2
-http://particletree.com/features/php-quick-profiler/
+I create "PHP Quick Profiler 2" for modern PHP programming extending [original PQP](http://particletree.com/features/php-quick-profiler/)
+
+## Changes between PQP#1:
+- Support Mobile Browser and Single Page Application.
+- Soft Error Handling with 'Strict Mode'.
+- Display Stack Trace when Occurred Exception.
+- Record Microtime, Backtrace and Memory Usage each Every Logs.
+- Display Duplicate Queries of SQL Database.
+- Auto detecting local path.
+- Optionally Strip $homepath when in log has file path.
 
 ## On This Page
 
