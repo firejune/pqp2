@@ -56,7 +56,7 @@ PQPTABS;
 
 echo '<div id="pqp-console" class="pqp-box">';
 
-if($logCount == 0) {
+if ($logCount == 0) {
 	echo '<h3>This panel has no log items.</h3>';
 }
 else {
@@ -74,7 +74,7 @@ else {
 			<table cellspacing="0">';
 
 		$class = '';
-		foreach($output['logs']['console'] as $key => $log) {
+		foreach ($output['logs']['console'] as $key => $log) {
 			if (!empty($log['query'])) {
 				$log['type'] = 'query';
 			}
@@ -82,17 +82,17 @@ else {
 				<td class="type">'.$log['type'].'</td>
 				<td class="'.$class.'">';
 
-			if($log['type'] == 'log' || $log['type'] == 'query' || $log['type'] == 'speed') {
+			if ($log['type'] == 'log' || $log['type'] == 'query' || $log['type'] == 'speed') {
 				echo '<div><pre class="time">'.$log['time'].'</pre> <em>'.$log['message'].'</em></div>';
 			}
-			elseif($log['type'] == 'memory') {
+			elseif ($log['type'] == 'memory') {
 				echo '<div><pre class="memory">'.$log['memory'].'</pre>';
 				if ($log['dataType'] != 'NULL') {
 					echo '<em>'.$log['dataType'].'</em>: ';
 				}
 				echo $log['message'].' </div>';
 			}
-			elseif($log['type'] == 'error') {
+			elseif ($log['type'] == 'error') {
 				echo '<div>';
 				if (isset($log['duplicate'])) {
 					echo '<em>'.$log['duplicate'].' times</em> ';
@@ -102,9 +102,8 @@ else {
 					echo '<div class="context">'.$log['context'].'</div>';
 				}
 			}
-
 			echo '</td></tr>';
-			if($class == '') $class = 'alt';
+			if ($class == '') $class = 'alt';
 			else $class = '';
 		}
 
@@ -115,7 +114,7 @@ echo '</div>';
 
 echo '<div id="pqp-speed" class="pqp-box">';
 
-if($output['logs']['speedCount'] == 0) {
+if ($output['logs']['speedCount'] == 0) {
 	echo '<h3>This panel has no log items.</h3>';
 }
 else {
@@ -127,9 +126,9 @@ else {
 			<table cellspacing="0">';
 
 		$class = '';
-		foreach($output['logs']['console'] as $log) {
-			if($log['type'] == 'speed' || $log['type'] == 'log') {
-				if ($log['query']) {
+		foreach ($output['logs']['console'] as $log) {
+			if ($log['type'] == 'speed' || $log['type'] == 'log') {
+				if (!empty($log['query'])) {
 					$class = 'query';
 				}
 				echo '<tr class="log-'.$log['type'].'">
@@ -139,7 +138,7 @@ else {
 					echo '<div class="context">'.$log['context'].'</div>';
 				}
 				echo '</td></tr>';
-				if($class == '') $class = 'alt';
+				if ($class == '') $class = 'alt';
 				else $class = '';
 			}
 		}
@@ -151,7 +150,7 @@ echo '</div>';
 
 echo '<div id="pqp-queries" class="pqp-box">';
 
-if($output['queryTotals']['count'] == 0) {
+if ($output['queryTotals']['count'] == 0) {
 	echo '<h3>This panel has no log items.</h3>';
 }
 else {
@@ -164,14 +163,14 @@ else {
 			<table cellspacing="0">';
 
 		$class = '';
-		foreach($output['queries'] as $query) {
+		foreach ($output['queries'] as $query) {
 			if (isset($query['duplicate'])) {
 				$class = 'duplicate';
 			}
 			echo '<tr class="log-query">
 				<td class="'.$class.'">
 					<span>#'.$query['id'].'</span> '.$query['sql'];
-			if($query['explain']) {
+			if ($query['explain']) {
 					echo '<em>
 						Possible keys: <b>'.$query['explain']['possible_keys'].'</b> &middot;
 						Key Used: <b>'.$query['explain']['key'].'</b> &middot;
@@ -181,7 +180,7 @@ else {
 					</em>';
 			}
 			echo '</td></tr>';
-			if($class == '') $class = 'alt';
+			if ($class == '') $class = 'alt';
 			else $class = '';
 		}
 
@@ -192,7 +191,7 @@ echo '</div>';
 
 echo '<div id="pqp-memory" class="pqp-box">';
 
-if($output['logs']['memoryCount'] == 0) {
+if ($output['logs']['memoryCount'] == 0) {
 	echo '<h3>This panel has no log items.</h3>';
 }
 else {
@@ -204,11 +203,11 @@ else {
 			<table cellspacing="0">';
 
 		$class = '';
-		foreach($output['logs']['console'] as $log) {
-			if (isset($log['query']) && !empty($log['query'])) {
+		foreach ($output['logs']['console'] as $log) {
+			if (!empty($log['query'])) {
 				continue;
 			}
-			if($log['type'] == 'memory' || $log['type'] == 'log') {
+			if ($log['type'] == 'memory' || $log['type'] == 'log') {
 				echo '<tr class="log-'.$log['type'].'">';
 				if ($log['type'] == 'log') {
 					$class = 'memory';
@@ -224,7 +223,7 @@ else {
 				}
 				echo $log['message'].'</td>';
 				echo '</tr>';
-				if($class == '') $class = 'alt';
+				if ($class == '') $class = 'alt';
 				else $class = '';
 			}
 		}
@@ -236,7 +235,7 @@ echo '</div>';
 
 echo '<div id="pqp-files" class="pqp-box">';
 
-if($output['fileTotals']['count'] == 0) {
+if ($output['fileTotals']['count'] == 0) {
 	echo '<h3>This panel has no log items.</h3>';
 }
 else {
@@ -249,9 +248,9 @@ else {
 			<table cellspacing="0">';
 
 		$class ='';
-		foreach($output['files'] as $file) {
+		foreach ($output['files'] as $file) {
 			echo '<tr><td class="'.$class.'"><pre>'.$file['size'].'</pre> '.$file['path'].'</td></tr>';
-			if($class == '') $class = 'alt';
+			if ($class == '') $class = 'alt';
 			else $class = '';
 		}
 
@@ -269,11 +268,11 @@ echo <<<HEADER
 			Profiler</a></h2>
 		<div class="actions">
 			<a id="toggle-details">
-				<img src="/images/material/close.svg" width="16" height="16" alt="close"/>
+				<img src="$config/images/close.svg" width="16" height="16" alt="close"/>
 			</a>
 			<a id="toggle-height" class="heightToggle">
-				<img class="max" src="/images/material/window-maximize.svg" width="16" height="16" alt="maximize"/>
-				<img class="res" src="/images/material/window-restore.svg" width="16" height="16" alt="restore"/>
+				<img class="max" src="$config/images/window-maximize.svg" width="16" height="16" alt="maximize"/>
+				<img class="res" src="$config/images/window-restore.svg" width="16" height="16" alt="restore"/>
 			</a>
 		</div>
 	</header>
@@ -374,7 +373,7 @@ typeof window.pQp != 'function' ? window.pQp = (function() {
 		var sheet = document.createElement('link');
 		sheet.setAttribute('rel', 'stylesheet');
 		sheet.setAttribute('type', 'text/css');
-		sheet.setAttribute('href', '$cssUrl?r=' + new Date().getTime());
+		sheet.setAttribute('href', '$cssUrl');
 		document.getElementsByTagName('head')[0].appendChild(sheet);
 		setTimeout(main, 10);
 	}
