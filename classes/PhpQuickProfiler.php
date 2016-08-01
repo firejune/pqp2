@@ -17,27 +17,29 @@
 
 class PhpQuickProfiler {
 
-	public static $path = '/pqp/';
+	public static $path = '/pqp2/';
 	public static $startTime = 0;
 	public $globals = array();
 	public $output = array();
 	public $db = '';
 
-	function __construct($home = '') {
+	function __construct($home = '', $hook = true) {
 		require_once($_SERVER['DOCUMENT_ROOT'].self::$path.'classes/Console.php');
 
 		// Set strip path
-		console::$home = $home;
+		$this->home = console::$home = $home;
 
 		// Dump keys of global valiables for diff
 		foreach ($GLOBALS as $key => $val) {
 			$this->globals[] = $key.'';
 		}
 
-		ini_set('display_errors', 0);
-		error_reporting(E_ALL);
+    if ($hook) {
+  		ini_set('display_errors', 0);
+  		error_reporting(E_ALL);
 
-		set_error_handler('PhpQuickProfiler::handleError');
+  		set_error_handler('PhpQuickProfiler::handleError');
+    }
 	}
 
 	// CONNECT TO DATABASE
