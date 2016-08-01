@@ -28,6 +28,7 @@ class PhpQuickProfiler {
 
 		// Set strip path
 		$this->home = console::$home = $home;
+		$this->path = self::$path;
 
 		// Dump keys of global valiables for diff
 		foreach ($GLOBALS as $key => $val) {
@@ -256,20 +257,22 @@ class PhpQuickProfiler {
 	}
 
 	// DISPLAY TO THE SCREEN -- CALL WHEN CODE TERMINATING
-	public function display($db = '', $master_db = '') {
-		$this->db = $db;
-		$this->master_db = $master_db;
+	public function display($raw = false) {
 		$this->gatherConsoleData();
 		$this->gatherFileData();
 		$this->gatherMemoryData();
 		$this->gatherQueryData();
 		$this->gatherSpeedData();
 
-		require_once($_SERVER['DOCUMENT_ROOT'].self::$path.'display.php');
+		if (!$raw) {
+			require_once($_SERVER['DOCUMENT_ROOT'].self::$path.'display.php');
 
-		ob_start();
-		displayPqp($this->output, self::$path);
-		return ob_get_contents();
+			ob_start();
+			displayPqp($this->output, self::$path);
+			return ob_get_contents();
+		}
+
+		return $this->output;
 	}
 
 }
