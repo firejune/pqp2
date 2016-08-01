@@ -119,7 +119,7 @@ class Console {
 		if (is_array($e) && isset($e['trace'])) {
 			$trace = $e['trace'];
 		} elseif ($e instanceof Exception) {
-			$trace = $e->getTrace();
+			$trace = self::getTrace(0, $e->getTrace());
 		}
 
 		$logItem = array(
