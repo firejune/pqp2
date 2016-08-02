@@ -15,7 +15,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-require_once('smarty/Smarty.class.php');
 require_once('index.php');
 
 class PQP2Example {
@@ -25,11 +24,13 @@ class PQP2Example {
 
 	public function __construct() {
 		$this->profiler = new PhpQuickProfiler(dirname(__FILE__), false);
+		/*
 		$this->smarty = new Smarty();
-    $this->smarty->template_dir = dirname(__FILE__).'/';
-    $this->smarty->compile_dir  = SMARTY_DIR.'/templates_c/';
-    $this->smarty->config_dir   = SMARTY_DIR.'/configs/';
-    $this->smarty->cache_dir    = SMARTY_DIR.'/cache/';
+		$this->smarty->template_dir = dirname(__FILE__).'/';
+		$this->smarty->compile_dir  = SMARTY_DIR.'/templates_c/';
+		$this->smarty->config_dir   = SMARTY_DIR.'/configs/';
+		$this->smarty->cache_dir    = SMARTY_DIR.'/cache/';
+		*/
 	}
 
 	public function init() {
@@ -59,15 +60,15 @@ class PQP2Example {
 	// DATABASE OBJECT TO LOG QUERIES
 	public function sampleDatabaseData() {
 		/*
-		$db = new MySqlDatabase(
+		$db = 'your db name';
+		$conn = mysql_connect(
 			'your DB host',
 			'your DB user',
-			'your DB password');
+			'your DB password'
+		);
+		mysql_select_db($db, $conn);
 
-		$conn = $db->connect(true);
-		$db->changeDatabase('your db name');
-
-    $this->db = $this->profiler->connectDatabase($conn, $db);
+		$this->db = $this->profiler->connectDatabase($conn, $db);
 
 		$sql = 'SELECT PostId FROM Posts WHERE PostId > 2';
 		$rs = $this->db->query($sql);
@@ -102,10 +103,12 @@ class PQP2Example {
 	}
 
 	public function __destruct() {
-		// $this->profiler->display();
+		$this->profiler->display();
+		/*
 		$this->smarty->assign('path', $this->profiler->path);
 		$this->smarty->assign('output', $this->profiler->display(true));
 		$this->smarty->display('pqp.tpl');
+		*/
 	}
 
 }
