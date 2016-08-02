@@ -62,7 +62,7 @@ class MySqlDatabase {
 	}
 
 	function __destruct() {
-		@mysql_close($this->conn);
+		// @mysql_close($this->conn);
 	}
 
 }

@@ -73,38 +73,32 @@ else {
 		<section class="main">
 			<table cellspacing="0">';
 
-		$class = '';
+		$alt = '';
 		foreach ($output['logs']['console'] as $key => $log) {
 			if (!empty($log['query'])) {
 				$log['type'] = 'query';
 			}
 			echo '<tr class="log-'.$log['type'].'">
 				<td class="type">'.$log['type'].'</td>
-				<td class="'.$class.'">';
-
+				<td class="'.$alt.'">';
 			if ($log['type'] == 'log' || $log['type'] == 'query' || $log['type'] == 'speed') {
-				echo '<div><pre class="time">'.$log['time'].'</pre> <em>'.$log['message'].'</em></div>';
+				echo '<div><em>'.$log['message'].'</em> <pre class="time">'.$log['time'].'</pre></div>';
 			}
 			elseif ($log['type'] == 'memory') {
-				echo '<div><pre class="memory">'.$log['memory'].'</pre>';
-				if ($log['dataType'] != 'NULL') {
-					echo '<em>'.$log['dataType'].'</em>: ';
-				}
-				echo $log['message'].' </div>';
+				echo '<div>';
+				if ($log['dataType'] != 'NULL') echo '<em>'.$log['dataType'].'</em>: ';
+				echo $log['message'].'<pre class="memory">'.$log['memory'].'</pre>
+					</div>';
 			}
 			elseif ($log['type'] == 'error') {
 				echo '<div>';
-				if (isset($log['duplicate'])) {
-					echo '<em>'.$log['duplicate'].' times</em> ';
-				}
-				echo $log['message'].' <pre>'.$log['file'].':'.$log['line'].'</pre></div>';
-				if ($log['context']) {
-					echo '<div class="context">'.$log['context'].'</div>';
-				}
+				if (isset($log['duplicate'])) echo '<em>'.$log['duplicate'].' times</em> ';
+				echo $log['message'].' <pre>'.$log['file'].':'.$log['line'].'</pre>
+					</div>';
+				if ($log['context']) echo '<div class="context">'.$log['context'].'</div>';
 			}
 			echo '</td></tr>';
-			if ($class == '') $class = 'alt';
-			else $class = '';
+			$alt = ($alt == '' ? 'alt' : '');
 		}
 
 		echo '</table></section>';
@@ -125,21 +119,16 @@ else {
 		<section class="main">
 			<table cellspacing="0">';
 
-		$class = '';
+		$alt = '';
 		foreach ($output['logs']['console'] as $log) {
 			if ($log['type'] == 'speed' || $log['type'] == 'log') {
-				if (!empty($log['query'])) {
-					$class = 'query';
-				}
+				$class = !empty($log['query']) ? ' query' : '';
 				echo '<tr class="log-'.$log['type'].'">
-				<td class="'.$class.'">';
-				echo '<div><pre>'.$log['time'].'</pre>'.$log['message'].'</div>';
-				if ($log['context']) {
-					echo '<div class="context">'.$log['context'].'</div>';
-				}
+					<td class="'.$alt.$class.'">
+						<div>'.$log['message'].'<pre>'.$log['time'].'</pre></div>';
+				if ($log['context']) echo '<div class="context">'.$log['context'].'</div>';
 				echo '</td></tr>';
-				if ($class == '') $class = 'alt';
-				else $class = '';
+				$alt = ($alt == '' ? 'alt' : '');
 			}
 		}
 
@@ -162,26 +151,23 @@ else {
 		<section class="main">
 			<table cellspacing="0">';
 
-		$class = '';
+		$alt = '';
 		foreach ($output['queries'] as $query) {
-			if (isset($query['duplicate'])) {
-				$class = 'duplicate';
-			}
+			$class = isset($query['duplicate']) ? ' duplicate' : '';
 			echo '<tr class="log-query">
-				<td class="'.$class.'">
+				<td class="'.$alt.$class.'">
 					<span>#'.$query['id'].'</span> '.$query['sql'];
 			if ($query['explain']) {
-					echo '<em>
-						Possible keys: <b>'.$query['explain']['possible_keys'].'</b> &middot;
-						Key Used: <b>'.$query['explain']['key'].'</b> &middot;
-						Type: <b>'.$query['explain']['type'].'</b> &middot;
-						Rows: <b>'.$query['explain']['rows'].'</b> &middot;
-						Speed: <b>'.$query['time'].'</b>
-					</em>';
+				echo '<em>
+					Possible keys: <b>'.$query['explain']['possible_keys'].'</b> &middot;
+					Key Used: <b>'.$query['explain']['key'].'</b> &middot;
+					Type: <b>'.$query['explain']['type'].'</b> &middot;
+					Rows: <b>'.$query['explain']['rows'].'</b> &middot;
+					Speed: <b>'.$query['time'].'</b>
+				</em>';
 			}
 			echo '</td></tr>';
-			if ($class == '') $class = 'alt';
-			else $class = '';
+			$alt = ($alt == '' ? 'alt' : '');
 		}
 
 		echo '</table></section>';
@@ -202,29 +188,24 @@ else {
 		<section class="main">
 			<table cellspacing="0">';
 
-		$class = '';
+		$alt = '';
 		foreach ($output['logs']['console'] as $log) {
 			if (!empty($log['query'])) {
 				continue;
 			}
 			if ($log['type'] == 'memory' || $log['type'] == 'log') {
-				echo '<tr class="log-'.$log['type'].'">';
-				if ($log['type'] == 'log') {
-					$class = 'memory';
-				}
-				echo '<td class="'.$class.'">';
-				if (isset($log['dataType']) && $log['dataType'] != 'NULL') {
-					echo '<pre>'.$log['memory'].'</pre> <em>'.$log['dataType'].'</em>: ';
-				} else {
-					echo '<pre>'.$log['memory'].'</pre> ';
-				}
-				if (isset($log['context'])) {
-					echo '<div class="context">'.$log['context'].'</div>';
-				}
-				echo $log['message'].'</td>';
-				echo '</tr>';
-				if ($class == '') $class = 'alt';
-				else $class = '';
+				$class = $log['type'] == 'log' ? ' memory' : '';
+				echo '<tr class="log-'.$log['type'].'">
+					<td class="'.$alt.$class.'">
+						<div>';
+
+				if (isset($log['dataType']) && $log['dataType'] != 'NULL') echo '<em>'.$log['dataType'].'</em>: ';
+				echo $log['message'].'<pre>'.$log['memory'].'</pre>
+					</div>';
+
+				if (isset($log['context'])) echo '<div class="context">'.$log['context'].'</div>';
+				echo '</td></tr>';
+				$alt = ($alt == '' ? 'alt' : '');
 			}
 		}
 
@@ -247,11 +228,12 @@ else {
 		<section class="main">
 			<table cellspacing="0">';
 
-		$class ='';
+		$alt ='';
 		foreach ($output['files'] as $file) {
-			echo '<tr><td class="'.$class.'"><pre>'.$file['size'].'</pre> '.$file['path'].'</td></tr>';
-			if ($class == '') $class = 'alt';
-			else $class = '';
+			echo '<tr class="log-file"><td class="'.$alt.'">
+				<div>'.$file['path'].'<pre>'.$file['size'].'</pre></div>
+			</td></tr>';
+			$alt = ($alt == '' ? 'alt' : '');
 		}
 
 		echo '</table></section>';

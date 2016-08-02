@@ -222,7 +222,7 @@
 	background:#333;
 }
 .pQp .main td b{
-  color:#E6F387;
+	color:#E6F387;
 	font-weight:normal;
 }
 .pQp .main td:hover{
@@ -334,7 +334,7 @@
 }
 .pQp .log-query pre,
 .pQp .log-log pre {
-  color:#376aa1;
+	color:#376aa1;
 }
 .pQp .pqp-box .main pre {
 	float:right;
@@ -416,7 +416,7 @@
 	background-color:#9B2700;
 }
 #pqp-files .main pre{
-  color:#E6F387;
+	color:#E6F387;
 }
 
 /* ----- Footer ----- */

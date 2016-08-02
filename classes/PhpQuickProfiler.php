@@ -35,18 +35,18 @@ class PhpQuickProfiler {
 			$this->globals[] = $key.'';
 		}
 
-    if ($hook) {
-  		ini_set('display_errors', 0);
-  		error_reporting(E_ALL);
+		if ($hook) {
+			ini_set('display_errors', 0);
+			error_reporting(E_ALL);
 
-  		set_error_handler('PhpQuickProfiler::handleError');
-    }
+			set_error_handler('PhpQuickProfiler::handleError');
+		}
 	}
 
 	// CONNECT TO DATABASE
 	public function connectDatabase($conn, $db) {
-  	require_once($_SERVER['DOCUMENT_ROOT'].self::$path.'classes/MySqlDatabase.php');
-    $this->db = new MySqlDatabase($conn, $db);
+		require_once($_SERVER['DOCUMENT_ROOT'].self::$path.'classes/MySqlDatabase.php');
+		return $this->db = new MySqlDatabase($conn, $db);
 	}
 
 	// CUSTOM HANDLED ERROR MESSAGE
@@ -83,7 +83,7 @@ class PhpQuickProfiler {
 				$error = 'Deprecated';
 				break;
 			default :
-  			$error = 'Unknown';
+				$error = 'Unknown';
 				break;
 		}
 
