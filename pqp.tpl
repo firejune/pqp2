@@ -59,7 +59,7 @@
 							{elseif $log.type == 'error'}
 								<div>
           				{if $log.duplicate}<em>{$log.duplicate} times</em>{/if}
-          				{$log.message} <pre>{$log.file}:{$log.line}</pre>
+          				{$log.message}<pre>{$log.file}:{$log.line}</pre>
   						  </div>
                 {if $log.context}<div class="context">{$log.context}</div>{/if}
 							{/if}
@@ -87,8 +87,8 @@
   				  {assign var=$log.type value='query'}
 				  {/if}
 					<tr class='log-{$log.type}'>
-						<td class="{cycle values="alt,"}">
-  						<div><pre>{$log.time}</pre> {$log.message}</div>
+						<td class="{cycle values="alt,"}{if $log.query} query{/if}">
+  						<div>{$log.message}<pre>{$log.time}</pre></div>
   						{if $log.context}<div class="context">{$log.context}</div>{/if}
   				  </td>
 					</tr>
@@ -100,7 +100,7 @@
 	</div>
 
 	<div id='pqp-queries' class='pqp-box'>
-		{if $queryTotals.count == 0}
+		{if $output.queryTotals.count == 0}
 			<h3>This panel has no log items.</h3>
 		{else}
 			<table class='side' cellspacing='0'>
@@ -111,21 +111,21 @@
 
       <section class="main">
 				<table cellspacing='0'>
-				{foreach from=$queries item=query}
-						<tr>
-							<td class="{cycle values="alt,"}">
-								<span>#{$query.id}</span> {$query.sql}
-								{if $query.explain}
-								<em>
-									Possible keys: <b>{$query.explain.possible_keys}</b> &middot;
-									Key Used: <b>{$query.explain.key}</b> &middot;
-									Type: <b>{$query.explain.type}</b> &middot;
-									Rows: <b>{$query.explain.rows}</b> &middot;
-									Speed: <b>{$query.time}</b>
-								</em>
-								{/if}
-							</td>
-						</tr>
+				{foreach from=$output.queries item=query}
+					<tr class="log-query">
+						<td class="{cycle values="alt,"}{if $query.duplicate} duplicate{/if}">
+							<span>#{$query.id}</span> {$query.sql}
+							{if $query.explain}
+							<em>
+								Possible keys: <b>{$query.explain.possible_keys}</b> &middot;
+								Key Used: <b>{$query.explain.key}</b> &middot;
+								Type: <b>{$query.explain.type}</b> &middot;
+								Rows: <b>{$query.explain.rows}</b> &middot;
+								Speed: <b>{$query.time}</b>
+							</em>
+							{/if}
+						</td>
+					</tr>
 				{/foreach}
 				</table>
       </section>
@@ -147,7 +147,17 @@
   			{if !$log.query}
   				{if $log.type == 'memory' || $log.type == 'log'}
   					<tr class='log-{$log.type}'>
-  						<td class="{cycle values="alt,"}"><b>{$log.data}</b> <em>{$log.dataType}</em>: {$log.message}</td>
+  						<td class="{cycle values="alt,"}{if $log.type == 'log'} memory{/if}">
+    						<div>
+                  {if $log.dataType && $log.dataType != 'NULL'}
+                    <em>{$log.dataType}</em>:
+                  {/if}
+                  {$log.message}<pre>{$log.memory}</pre>
+    						</div>
+        				{if $log.context}
+        					<div class="context">{$log.context}</div>
+        				{/if}
+    				  </td>
   					</tr>
   				{/if}
   			{/if}
@@ -165,8 +175,10 @@
 			</table>
 			<section class="main">
 			<table cellspacing='0'>
-				{foreach from=$files item=file}
-					<tr><td class="{cycle values="alt,"}"><b>{$file.size}</b> {$file.message}</td></tr>
+				{foreach from=$output.files item=file}
+					<tr class="log-file"><td class="{cycle values="alt,"}">
+  					<div>{$file.path}<pre>{$file.size}</pre></div>
+  				</td></tr>
 				{/foreach}
 			</table>
 			</section>
