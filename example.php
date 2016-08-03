@@ -167,7 +167,7 @@ strong a {
 	<li>Prevent files from getting out of control. [ <a href="#" onclick="pQp.changeTab('files'); return false;">Demo</a> ]</li>
 	</ul>
 
-	<strong>Return to <a href="http://particletree.com/features/php-quick-profiler/">Particletree</a>.</strong>
+	<strong>Return to <a href="//github.com/firejune/pqp2/">GitHub</a>.</strong>
 </div>
 </body>
 </html>

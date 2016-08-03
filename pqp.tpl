@@ -186,10 +186,10 @@
 
 	<header id="pqp-header" cellspacing="0">
 		<h2 class="credit">
-			<a href="http://particletree.com" target="_blank">
+			<a href="//github.com/firejune/pqp2" target="_blank">
 			<strong>PHP</strong>
 			<b class="green">Q</b><b class="blue">u</b><b class="purple">i</b><b class="orange">c</b><b class="red">k</b>
-			Profiler</a></h2>
+			Profiler #2</a></h2>
 		<div class="actions">
 			<a id="toggle-details">
 				<img src="{$path}images/close.svg" width="16" height="16" alt="close"/>
